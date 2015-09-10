@@ -38,7 +38,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<h1><?php echo $this->Html->link('Home', '/'); ?>
+			<div style="text-align:center">
+			<?php
+				echo $this->Form->create('Book', array('type' => 'get', 'action' => 'search'));
+				echo $this->Form->input('title', array('rows' =>1, 'label' => '本のタイトル', 'style' => 'width:600px'));
+				echo $this->Form->end('検索');?>
+			</div>
+			<div style="text-align:right">
+                <?php if($auth->loggedIn()) {
+                        echo $this->Html->link($auth->user('username'), '/users/mypage/'.$auth->user('id'));
+                        echo $this->Html->link('ログアウト', '/users/logout');
+                      }else{
+                        echo $this->Html->link('ログイン', '/users/login');
+                        echo $this->Html->link('ユーザー登録', '/users/add');
+                      }
+                ?>
+            </div>
+			</h1>
 		</div>
 		<div id="content">
 
