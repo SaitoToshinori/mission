@@ -25,7 +25,7 @@ class BooksController extends AppController {
 
 	public function index() {
 		//find allで最新のもの10っけん
-		$this->set('book', $this->Favorite->find('all',array(
+		$this->set('book', $this->Book->find('all',array(
 			'limit' => 10,
 			'order' => array('Book.id' => 'desc')
 			)));
@@ -51,7 +51,7 @@ class BooksController extends AppController {
 		    'limit' => 10,
 		    'order' => array('id' => 'desc')
 		));
-
+		//これは$favoritesを使うためのモノ
 		// 各本をお気に入りしたユーザ10人ずつ
 		$favorites = $this->Favorite->find('all', array(
 		    'conditions' => array(
@@ -60,7 +60,7 @@ class BooksController extends AppController {
 		));
 
 		// 各book_id毎にfavoriteのリストを持ちたい
-		//形としてはこうだよね
+		//
 		// array(
 		//    book_id => array(
 		//      [Favorite],
@@ -73,7 +73,7 @@ class BooksController extends AppController {
 		//      [Favorite],
 		//    ),
 		// )
-		$user = array(); //空っぽ
+		$user = array(); //空っぽ。という変数の宣言だから意味ないというか考えなくてよし
 		foreach ($favorites as $favorite) {//$favoritesの中身を回す
 		    $book_id = Hash::get($favorite, 'Favorite.book_id');//$favoriteの中からbook_idを取得
 
@@ -231,18 +231,26 @@ class BooksController extends AppController {
 			//保存されているbook_idとログインしているuser_idのセットがあるかどうかチェックする(既にセットとしてあったら登録ではなくて修正のボタンにするため)
 		//現在何故か重複してしまっているのでダメになっている。
 		}
+		
 		$review1 = $this->Book->find('first', array(
 			'conditions' => array(
 				'Book.isbn' => $confirm1)
 			)
-		);
-		
-		$review2 = $this->Favorite->find('all', array(
+		);//今表示している本のisbnと一致する本があるかどうかをチェック
+
+		if(!empty($review1)) {
+			$review2 = $this->Favorite->find('all', array(
 			'conditions' => array(
 				'Favorite.book_id' => $review1['Book']['id']
 			)
 		));
-		$this->set('reviews', $review2);
+			$this->set('reviews', $review2);
+
+		} else {
+			$this->set('reviews', $review1);			
+		}
+		
+		
 		
 		/*
 		isbnを取得し、このisbnに一致するbooksのレコードを探す。ここで得たbook.idをつかってfavoriteのレビューを探す。

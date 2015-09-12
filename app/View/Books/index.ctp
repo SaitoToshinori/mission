@@ -9,14 +9,20 @@
         <th>お気に入り登録したユーザー</th>
     </tr>
     <?php foreach ($book as $books): ?>
-        <?php var_dump($books); ?>
-    
-    		
+        		
     <tr>
         <td><?php echo $this->Html->image($books['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "detail?isbn=".$books['Book']['isbn'])); ?></td>
         <td><?php echo $this->Html->link($books['Book']['title'], "detail?isbn=".$books['Book']['isbn']); ?></td>
         <td><?php echo $this->Html->link($books['Book']['author'], "author?author=".$books['Book']['author']); ?></td>
         <td><?php echo $books['Book']['publication']; ?></td>
+        <td><?php $id = $books['Book']['id'];
+                  $user_ids = $Book->Favorite->find('all', array(
+                    'conditions' => array(
+                        'Favorite.book_id' => $id
+                        )));
+                  foreach ($user_ids as $user_id){
+                    echo $this->Html->link($user_id['User']['username'], '/users/mypage/'.$user_id['User']['id']);
+                  } ?></td>
         
     </tr>
     

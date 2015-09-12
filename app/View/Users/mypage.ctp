@@ -1,20 +1,3 @@
-<ul>
-    <li>Languages
-        <ul>
-            <li>English
-                <ul>
-                    <li>American</li>
-                    <li>Canadian</li>
-                    <li>British</li>
-                </ul>
-            </li>
-            <li>Spanish</li>
-            <li>German</li>
-        </ul>
-    </li>
-</ul>
-
-
 <h2><?php echo $name['User']['username']; ?>のしたレビュー</h2>
 
 <?php
