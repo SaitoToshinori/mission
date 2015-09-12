@@ -260,6 +260,7 @@ class BooksController extends AppController {
 
 	public function table() {
 		$this->set('Book', $this->paginate('Book'));
+		$this->set('User', $this);
 	}
 	/*
 	public function table() {
