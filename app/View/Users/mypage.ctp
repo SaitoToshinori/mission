@@ -63,6 +63,7 @@ echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next di
         <th>タイトル</th>
         <th>著者</th>
         <th>発売日</th>
+        <th>お気に入り登録したユーザー</th>
     </tr>
      
     <?php foreach ($Book as $book): ?>
@@ -71,6 +72,14 @@ echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next di
         <td><?php echo $this->Html->link($book['Book']['title'], array('controller' => 'books', 'action' => 'detail',"detail?isbn=".$book['Book']['isbn'])); ?></td>
         <td><?php echo $this->Html->link($book['Book']['author'], 'author?author='.$book['Book']['author']); ?></td>
         <td><?php echo $book['Book']['publication']; ?></td>
+        <td><?php $id = $book['Book']['id'];
+                  $user_ids = $User->Favorite->find('all', array(
+                    'conditions' => array(
+                        'Favorite.book_id' => $id
+                        )));
+                  foreach ($user_ids as $user_id){
+                    echo $this->Html->link($user_id['User']['username'], '/users/mypage/'.$user_id['User']['id']);
+                  } ?></td>
     </tr>
     <?php endforeach; ?>
      

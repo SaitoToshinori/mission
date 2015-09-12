@@ -72,6 +72,7 @@ class UsersController extends AppController {
 				'User.id' => $id
 				)));
 		$this->set('name', $name);
+		$this->set('User', $this);
 	}
 
 	public function book() {
