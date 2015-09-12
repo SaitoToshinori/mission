@@ -9,6 +9,7 @@
         <th>お気に入り登録したユーザー</th>
     </tr>
     <?php foreach ($book as $books): ?>
+        <?php var_dump($books); ?>
     
     		
     <tr>

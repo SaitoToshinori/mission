@@ -61,11 +61,17 @@ class UsersController extends AppController {
 
 	public function mypage() {
 		$this->set('Favorite',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->Auth->user('id')
+			'Favorite.user_id' => $this->request->params['id']
 			)));
 		$this->set('Book',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->Auth->user('id')
+			'Favorite.user_id' => $this->request->params['id']
 			)));
+		$id = $this->request->params['id'];
+		$name = $this->User->find('first', array(
+			'conditions' => array(
+				'User.id' => $id
+				)));
+		$this->set('name', $name);
 	}
 
 	public function book() {

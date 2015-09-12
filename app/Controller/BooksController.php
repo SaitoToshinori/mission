@@ -25,9 +25,9 @@ class BooksController extends AppController {
 
 	public function index() {
 		//find allで最新のもの10っけん
-		$this->set('book', $this->Book->find('all', array(
+		$this->set('book', $this->Favorite->find('all',array(
 			'limit' => 10,
-			'order' => array('id' => 'desc')
+			'order' => array('Book.id' => 'desc')
 			)));
 		$this->set('favorite',$this->Favorite->find('all', array(
 			'limit' => 10,
@@ -44,6 +44,46 @@ class BooksController extends AppController {
 		最後の取り出しかた＝それぞれのテーブル項目のbook.idと一致するfavorite.book_idを探す。
 		そこからuser_idを取得して、それと一致するuser.idを持ってるuser.usernameを取得する
         */
+
+        /*
+        // 最新の登録された本10件
+		$books = $this->Book->find('all', array(
+		    'limit' => 10,
+		    'order' => array('id' => 'desc')
+		));
+
+		// 各本をお気に入りしたユーザ10人ずつ
+		$favorites = $this->Favorite->find('all', array(
+		    'conditions' => array(
+		        'book_id' => Hash::extract($books, '{n}.Book.id'
+		    )
+		));
+
+		// 各book_id毎にfavoriteのリストを持ちたい
+		//形としてはこうだよね
+		// array(
+		//    book_id => array(
+		//      [Favorite],
+		//      [Favorite],
+		//      [Favorite],
+		//    ),
+		//    book_id => array(
+		//      [Favorite],
+		//      [Favorite],
+		//      [Favorite],
+		//    ),
+		// )
+		$user = array(); //空っぽ
+		foreach ($favorites as $favorite) {//$favoritesの中身を回す
+		    $book_id = Hash::get($favorite, 'Favorite.book_id');//$favoriteの中からbook_idを取得
+
+		    if (!Hash::get($user, $book_id)) {//$userに$book_id=$favoriteの中のbook_idがあるなら
+		        $user[$book_id] = [];//$user[$book_id]に中身が空の配列をわたす
+		    }
+
+		    $user[$book_id][] = $favorite;//?$user[$book_id][]に$favoriteを入れる？それとも、$user[$book_id]を入れる？
+		}
+		        */
 
 		}
 

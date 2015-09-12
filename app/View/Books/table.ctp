@@ -16,8 +16,8 @@
      
     <?php foreach ($Book as $book): ?>
     <tr>
-        <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "detail?title=".$book['Book']['title'])); ?></td>
-        <td><?php echo $this->Html->link($book['Book']['title'], 'detail?title='.$book['Book']['title']); ?></td>
+        <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "detail?isbn=".$book['Book']['isbn'])); ?></td>
+        <td><?php echo $this->Html->link($book['Book']['title'], 'detail?isbn='.$book['Book']['isbn']); ?></td>
         <td><?php echo $this->Html->link($book['Book']['author'], 'author?author='.$book['Book']['author']); ?></td>
         <td><?php echo $book['Book']['publication']; ?></td>
     </tr>
