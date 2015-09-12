@@ -17,7 +17,7 @@
         
     <tr>
         <td><?php echo $this->Html->image($hoge['smallImageUrl']); ?></td>
-        <td><?php echo $this->Html->link($hoge['title'], 'detail?title='.$hoge['title'], array('action' => 'detail')); ?></td><!--
+        <td><?php echo $this->Html->link($hoge['title'], 'detail?isbn='.$hoge['isbn'], array('action' => 'detail')); ?></td><!--
         詳細画面に行く時には、どのページの情報を取得すればいいかに注意。ここで、タイトルをクリックすると、パラメーターにタイトルを持った、books/detail/['title']に遷移。
         この時にしっかりとこのページでゲットした各種必要な変数をゲットする。また、isbnでしっかりと基さんが撮っていた本のあらすじを取れるようにするここから、books/detail?title=???というページに移行させる。ここではお気に入りボタンの表示、記事の詳細情報(検索結果の他に出版社、あらすじ、価格がある)
         ここで、その記事に紐付いているレビューを持ってくる。また、レビューページの遷移にもこのページの情報というか、そういうものが必要である。

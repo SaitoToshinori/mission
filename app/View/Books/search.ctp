@@ -1,8 +1,8 @@
 <h2><?php echo $this->request->query('title') ?>の検索結果</h2>
 
 <?php
- echo $this->Paginator->counter(array('format' => '全%count%件' ));
- echo $this->Paginator->counter(array('format' => '{:page}/{:pages}ページを表示'));
+ $aa = count($items);
+ var_dump($aa);
 ?>
 
 <table>
@@ -12,7 +12,7 @@
         <th>タイトル</th>
         <th>著者</th>
         <th>本の発売日</th>
-
+        
     </tr>
 
             <?php foreach ($items as $hoge) :?>
@@ -21,7 +21,7 @@
       <!--そのまま帰ってきたのだと前半にいいものが入っていない→そこから目的の本情報が入っている['Items']にまで言った。foreachの回し方に注意！-->
         
     <tr>
-        <td><?php echo $this->Html->image($hoge['smallImageUrl'], array('alt' => 'サムネイル', 'url' => "detail?title=".$hoge['title']/*たまたま思いついてしまった。*/)); ?></td>
+        <td><?php echo $this->Html->image($hoge['smallImageUrl'], array('alt' => 'サムネイル', 'url' => "detail?isbn=".$hoge['isbn']/*たまたま思いついてしまった。*/)); ?></td>
         <td><?php echo $this->Html->link($hoge['title'], 'detail?isbn='.$hoge['isbn'], array('action' => 'detail')); ?></td><!--
         詳細画面に行く時には、どのページの情報を取得すればいいかに注意。ここで、タイトルをクリックすると、パラメーターにタイトルを持った、books/detail/['title']に遷移。
         この時にしっかりとこのページでゲットした各種必要な変数をゲットする。また、isbnでしっかりと基さんが撮っていた本のあらすじを取れるようにするここから、books/detail?title=???というページに移行させる。ここではお気に入りボタンの表示、記事の詳細情報(検索結果の他に出版社、あらすじ、価格がある)
@@ -32,6 +32,7 @@
         あとページャーもつける-->
         <td><?php echo $this->Html->link($hoge['author'], 'author?author='.$hoge['author'], array('action' => 'author')); ?></td>
         <td><?php echo $hoge['salesDate']; ?></td>
+        
     </tr>
     
     <?php endforeach; ?>

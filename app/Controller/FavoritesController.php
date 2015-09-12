@@ -61,17 +61,38 @@ class FavoritesController extends AppController {
 		*/
 	}
 
-	public function edit() {
-		/*
-		
-		*/
+	public function edit($id = null) {
+		$rr = $this->Favorite->find('first', array(
+        	'conditions' => array(
+        		'Favorite.id' => $this->request->params['id'])
+        	));
+        $this->set('bookid', $rr);
+
+		$this->Favorite->id = $id;
+        if ($this->request->is('get')) {
+            $this->request->data = $this->Favorite->read();
+        } else {
+            if ($this->Favorite->save($this->request->data)) {
+                $this->Session->setFlash('修正しました');
+                $this->redirect(array('controller' => 'users', 'action'=>'mypage', $this->Auth->user('id')));
+            } else {
+                $this->Session->setFlash('修正失敗しました');
+            }
+        }
 	}
 
-	public function delete() {
-		/*
-		
-		*/		
-	}
+	public function delete($id) {
+				if ($this->request->is('get')) {
+        			throw new MethodNotAllowedException();
+    			}
+   				if($this->Favorite->delete($id)) {
+		            $this->Session->setFlash('Success!');
+		            $this->redirect('/users/mypage/'.$this->Auth->user('id'));
+				} else {
+					$this->Session->setFlash('failed!');
+		            $this->redirect('/users/mypage/'.$this->Auth->user('id'));
+				}
+		}
 
 	public function review() {
 		$this->set('Favorite',$this->paginate());

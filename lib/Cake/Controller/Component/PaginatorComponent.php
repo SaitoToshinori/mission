@@ -101,6 +101,8 @@ class PaginatorComponent extends Component {
 		'limit', 'sort', 'page', 'direction'
 	);
 
+
+
 /**
  * Constructor
  *
@@ -194,6 +196,8 @@ class PaginatorComponent extends Component {
 				$parameters['recursive'] = $recursive;
 			}
 			$results = $object->find($type, array_merge($parameters, $extra));
+//$this->log(array_merge($parameters, $extra), 'debug');
+//$this->log($results, 'debug');
 		}
 		$defaults = $this->getDefaults($object->alias);
 		unset($defaults[0]);
@@ -237,9 +241,13 @@ class PaginatorComponent extends Component {
 		);
 
 		if ($requestedPage > $page) {
+			//
+			//var_dump($results);
+			//var_dump($conditions);
+			//var_dump($extra);
+			//exit;
 			throw new NotFoundException();
 		}
-
 		if (!in_array('Paginator', $this->Controller->helpers) &&
 			!array_key_exists('Paginator', $this->Controller->helpers)
 		) {

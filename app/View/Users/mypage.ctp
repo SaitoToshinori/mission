@@ -1,3 +1,20 @@
+<ul>
+    <li>Languages
+        <ul>
+            <li>English
+                <ul>
+                    <li>American</li>
+                    <li>Canadian</li>
+                    <li>British</li>
+                </ul>
+            </li>
+            <li>Spanish</li>
+            <li>German</li>
+        </ul>
+    </li>
+</ul>
+
+
 <h2><?php echo $auth->user()['username']; ?>のしたレビュー</h2>
 
 <?php
@@ -14,10 +31,12 @@
         <th>レビュワー名</th>
         <th>評価</th>
         <th>本文</th>
+        <th>削除</th>
+        <th>編集</th>
     </tr>
      
     <?php foreach ($Favorite as $favorite): ?>
-    
+    <?php var_dump($favorite);?>
     <tr>
         <td><?php echo $this->Html->image($favorite['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "/books/detail?isbn=".$favorite['Book']['isbn'])); ?></td>
         <td><?php echo $this->Html->link($favorite['Book']['title'], "/books/detail?isbn=".$favorite['Book']['isbn']); ?></td>
@@ -25,6 +44,18 @@
         <td><?php echo $this->Html->link($favorite['User']['username'], '/users/mypage/'.$favorite['User']['id']); ?></td>
         <td><?php echo $favorite['Favorite']['evaluation']; ?></td>
         <td><?php echo $favorite['Favorite']['review']; ?></td>
+        <td>
+        <?php  if($this->request->params['id'] == $auth->user('id')) {
+            echo  $this->Form->postLink('削除', array('controller' => 'favorites', 'action' => 'delete', $favorite['Favorite']['id']));
+            } else {
+            echo '他人のお気に入りは削除できません';} ?>
+        </td>
+        <td>
+        <?php  if($this->request->params['id'] == $auth->user('id')) {
+            echo  $this->Html->link('編集', array('controller' => 'favorites', 'action' => 'edit', $favorite['Favorite']['id']));
+            } else {
+            echo '他人のお気に入りは編集できません';} ?>
+        </td>
     </tr>
     <?php endforeach; ?>
      

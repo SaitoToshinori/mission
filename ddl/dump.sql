@@ -27,7 +27,7 @@ CREATE TABLE `books` (
   `title` varchar(255) DEFAULT NULL,
   `author` varchar(255) DEFAULT NULL,
   `publisher` varchar(255) DEFAULT NULL,
-  `text` varchar(255) DEFAULT NULL,
+  `text` text,
   `publication` varchar(255) DEFAULT NULL,
   `price` varchar(255) DEFAULT NULL,
   `isbn` varchar(255) DEFAULT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `favorites` (
   `book_id` int(11) DEFAULT NULL,
   `evaluation` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `favorites` (
 
 LOCK TABLES `favorites` WRITE;
 /*!40000 ALTER TABLE `favorites` DISABLE KEYS */;
-INSERT INTO `favorites` VALUES (5,'今読んでる','意外',2,16,'かなり評価する'),(6,'積読','ダメ',2,17,'評価していない'),(7,'今読んでる','',1,18,'評価していない'),(8,'読みたい','会心の一冊',1,19,'かなり評価する'),(9,'読み終わった','微妙',1,20,'あまり評価していない'),(10,'今読んでる','腹減り',1,21,'評価する'),(11,'積読','地球になれた',1,22,'かなり評価する'),(12,'読み終わった','哲学',1,23,'評価する'),(13,'読み終わった','栄光の架橋',1,24,'評価する'),(14,'積読','情報は大事',1,25,'かなり評価する');
+INSERT INTO `favorites` VALUES (7,'今読んでる','',1,18,'評価していない'),(8,'読みたい','会心の一冊',1,19,'かなり評価する'),(9,'読み終わった','微妙',1,20,'あまり評価していない'),(10,'今読んでる','腹減り',1,21,'評価する'),(11,'積読','地球になれた',1,22,'かなり評価する'),(12,'読み終わった','哲学',1,23,'評価する'),(13,'読み終わった','栄光の架橋',1,24,'評価する'),(14,'積読','情報は大事',1,25,'かなり評価する'),(15,'読みたい','コツコツ読みたい',1,25,'評価していない'),(16,'今読んでる','読む気失せた',1,25,'評価していない'),(20,'読みたい','評判良し',2,24,'かなり評価する'),(21,'読み終わった','お帰り',2,16,'評価する'),(22,'読み終わった','goh',2,25,'評価していない');
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,4 +111,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-11  3:13:55
+-- Dump completed on 2015-09-12 17:07:49

@@ -8,11 +8,11 @@ class BooksController extends AppController {
 
 	public $paginate = array(
 			'Book'	=> array(
-				'limit' => 10,
+				'limit' => 25,
 				'order' => array('id' => 'desc')
 				),
 			'Favorite' => array(
-				'limit' => 10,
+				'limit' => 25,
 				'order' => array('id' => 'desc'),
 				'conditions' => array(
 					'NOT' => array(
@@ -24,14 +24,28 @@ class BooksController extends AppController {
 
 
 	public function index() {
-		//$this->Paginator->settings['paramType'] = 'querystring';
-		$page = $this->request->params['named']['page'];
-		var_dump($this->paginate['Book']);
-		$this->paginate['Book']['page'] = $page;
-		$this->set('book', $this->paginate('Book'));
-		//var_dump($this->request->params['named']['page']);
-		$this->set('favorite',$this->paginate('Favorite'));
-	}
+		//find allで最新のもの10っけん
+		$this->set('book', $this->Book->find('all', array(
+			'limit' => 10,
+			'order' => array('id' => 'desc')
+			)));
+		$this->set('favorite',$this->Favorite->find('all', array(
+			'limit' => 10,
+			'order' => array('Favorite.id' => 'desc'),
+			'conditions' => array(
+					'NOT' => array(
+						'Favorite.review' => ''
+					)
+				)
+			)));
+		$this->set('Book', $this);
+		
+		/*【本を登録したユーザーの表示】
+		最後の取り出しかた＝それぞれのテーブル項目のbook.idと一致するfavorite.book_idを探す。
+		そこからuser_idを取得して、それと一致するuser.idを持ってるuser.usernameを取得する
+        */
+
+		}
 
 	
 
@@ -70,7 +84,7 @@ class BooksController extends AppController {
 			
 			)
 		);
-		$this->set('Book', $this->paginate());
+		$this->set('Book', $this->paginate('Book'));
 	    /*
 	    もしサムネイル、もしくはタイトルがクリックされたら
 	    その本のisbnをリンクデータに格納して、飛び先に送る。
@@ -139,7 +153,6 @@ class BooksController extends AppController {
 			} else {
 				$items = array( Hash::get($xmlArray, 'root.Items.Item') );
 			}
-			$this->log(Hash::get($xmlArray, 'root.Items'), 'debug');
 	        //$this->set('divination', $xmlArray);
 	        //$this->log($xmlArray);
 	        $this->set('items', $items);
@@ -156,16 +169,48 @@ class BooksController extends AppController {
 	    xmlで取得し、パース
 	    表示
 		*/
+		$confirm1 = $this->request->query('isbn');//urlのisbnを取得。やろうとしていることは既にbooksに保存されていてそれが既に今のユーザーにレビューされているかどうかのチェック
+		//これがあると編集画面に行けるのか、登録画面に行けるのかがわかれる
+		//var_dump($confirm);
+		$confirm2 = $this->Book->find('first', array(
+			'conditions' => array(
+				'Book.isbn' => $confirm1)
+			));//既にその本が保存されているかどうかをチェク(該当bookのレコードを取得)
+		//var_dump($confirm2['Book']['id']);撮れてるconfirm2の時点でとれていなかったら$confirm2['Book']['id']がエラーになる
+		if(!empty($confirm2)) {//$confirm2が入っていたらこの中に
+			$confirm3 = $this->Favorite->find('first', array(
+				'conditions' => array(
+					'Favorite.book_id' => $confirm2['Book']['id'],//ここにBookがあるのはconfirm2で値がとれているありきの話
+					'Favorite.user_id' => $this->Auth->user('id')
+				)
+				)
+			);
+			$this->set('confirm', $confirm3);
+		} else {
+			$this->set('confirm', $confirm2);
+			//保存されているbook_idとログインしているuser_idのセットがあるかどうかチェックする(既にセットとしてあったら登録ではなくて修正のボタンにするため)
+		//現在何故か重複してしまっているのでダメになっている。
+		}
+		$review1 = $this->Book->find('first', array(
+			'conditions' => array(
+				'Book.isbn' => $confirm1)
+			)
+		);
+		
+		$review2 = $this->Favorite->find('all', array(
+			'conditions' => array(
+				'Favorite.book_id' => $review1['Book']['id']
+			)
+		));
+		$this->set('reviews', $review2);
+		
+		/*
+		isbnを取得し、このisbnに一致するbooksのレコードを探す。ここで得たbook.idをつかってfavoriteのレビューを探す。
+		取得したbook_idを持っているfavoritesのレコードを探す。それが合ったならforeach
+		*/
 	}
 
 	public function table() {
-		$this->paginate = array(
-			'Book' => array(
-				'limit' => 20,
-				'order' => array('id' => 'desc')
-			
-			)
-		);
 		$this->set('Book', $this->paginate('Book'));
 	}
 	/*
