@@ -39,6 +39,7 @@ class BooksController extends AppController {
 				)
 			)));
 		$this->set('Book', $this);
+
 		
 		/*【本を登録したユーザーの表示】
 		最後の取り出しかた＝それぞれのテーブル項目のbook.idと一致するfavorite.book_idを探す。
@@ -97,7 +98,7 @@ class BooksController extends AppController {
                 $this->Session->setFlash('入力しなければ検索できません。');
                 $this->redirect(array('action'=>'index'));
             }
-
+			/*
            	$baseUrl = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20130522?';
 			$params = array(
 				'applicationId' => '1020126519972453190',
@@ -114,17 +115,32 @@ class BooksController extends AppController {
 				$items = array( Hash::get($xmlArray, 'root.Items.Item') );
 			}
 			$this->set('items', $items);
-	        //$this->set('divination', $xmlArray);
+	        //$this->set('divination', $xmlArray)*/
 	    }
+	    $this->paginate = array(
+	    	'Book' => array(
+	    		'conditions' => array(
+	    			'title' => $this->request->query('title')
+	    		),
+	    		'limit' =>25,
+	    		'page' => Hash::get($this->request->params['named'], 'named.page')
 
+	    	)
+	    );
+	    /*
 	    $this->paginate = array(
 			'Book' => array(
 				'limit' => 25,
 				'order' => array('id' => 'desc')
-			
+		
 			)
-		);
-		$this->set('Book', $this->paginate('Book'));
+		);*/
+		
+		
+		$items = $this->paginate();
+	    $this->set('items', $items);    
+		
+		
 	    /*
 	    もしサムネイル、もしくはタイトルがクリックされたら
 	    その本のisbnをリンクデータに格納して、飛び先に送る。
@@ -141,6 +157,7 @@ class BooksController extends AppController {
 		if($this->request->is('get')) {
             $author = $this->request->query('author');
             //スペースキーで文字ん風力することを禁止しなくては
+            /*
            	$baseUrl = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20130522?';
 			$params = array(
 				'applicationId' => '1020126519972453190',
@@ -158,11 +175,25 @@ class BooksController extends AppController {
 				$items = array( Hash::get($xmlArray, 'root.Items.Item') );
 			}
 			$this->set('items', $items);
+
 			//$this->log(Hash::get($xmlArray, 'root.Items'), 'debug');
 	        //$this->set('divination', $xmlArray);
 	        //$this->log($xmlArray);
-	        
+	        */
 	    }
+
+	    $this->paginate = array(
+	    	'Book' => array(
+	    		'conditions' => array(
+	    			'author' => $this->request->query('author')
+	    		),
+	    		'limit' =>25,
+	    		'page' => Hash::get($this->request->params['named'], 'named.page')
+
+	    	)
+	    );
+	    $items = $this->paginate();
+	    $this->set('items', $items);    
 		/*
 		もし著者がクリックされたら(リンクを張り、リンクにはその著者の名前が入っている変数を格納し田植えでauthorページに行く。これを検索条件にapiを使用)
 	    その本のisbnをリンクデータに格納して、飛び先に送る。
@@ -173,6 +204,7 @@ class BooksController extends AppController {
 	    表示
 	    データをビューに渡しておわり
 		*/
+
 	}
 
 	public function detail() {

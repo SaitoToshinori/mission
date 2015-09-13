@@ -40,6 +40,11 @@
     	array("id"=>"[0-9]+")
     );
 
+    Router::connect("/favorites/edit/:id",
+		array('controller' => 'favorites', 'action' => 'edit'),
+    	array("id"=>"[0-9]+")
+    );
+    
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.

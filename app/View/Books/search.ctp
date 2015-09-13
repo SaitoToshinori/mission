@@ -1,9 +1,5 @@
 <h2><?php echo $this->request->query('title') ?>の検索結果</h2>
 
-<?php
- $aa = count($items);
- var_dump($aa);
-?>
 
 <table>
      
@@ -32,7 +28,7 @@
         あとページャーもつける-->
         <td><?php echo $this->Html->link($hoge['author'], 'author?author='.$hoge['author'], array('action' => 'author')); ?></td>
         <td><?php echo $hoge['salesDate']; ?></td>
-        
+
     </tr>
     
     <?php endforeach; ?>

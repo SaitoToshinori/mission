@@ -131,7 +131,7 @@ class PaginatorComponent extends Component {
 		if (is_array($object)) {
 			$whitelist = $scope;
 			$scope = $object;
-			$object = null;
+			$object = null;//objectはnull
 		}
 
 		$object = $this->_getObject($object);
@@ -142,22 +142,22 @@ class PaginatorComponent extends Component {
 
 		$options = $this->mergeOptions($object->alias);
 		$options = $this->validateSort($object, $options, $whitelist);
-		$options = $this->checkLimit($options);
+		$options = $this->checkLimit($options);//分からない
 
-		$conditions = $fields = $order = $limit = $page = $recursive = null;
+		$conditions = $fields = $order = $limit = $page = $recursive = null;//$conditionsをnullに
 
 		if (!isset($options['conditions'])) {
 			$options['conditions'] = array();
-		}
+		}//$optionsに['conditions']がなかったらそこに空の配列を
 
 		$type = 'all';
 
 		if (isset($options[0])) {
 			$type = $options[0];
-			unset($options[0]);
+			unset($options[0]);//$optionsに要素がなかったら$typeに$options[0]を代入
 		}
 
-		extract($options);
+		extract($options);//$optionsをextract
 
 		if (is_array($scope) && !empty($scope)) {
 			$conditions = array_merge($conditions, $scope);
@@ -170,7 +170,7 @@ class PaginatorComponent extends Component {
 
 		$extra = array_diff_key($options, compact(
 			'conditions', 'fields', 'order', 'limit', 'page', 'recursive'
-		));
+		));//$optionsの中の要素と第二引数の差分をチェックして$extraへ
 
 		if (!empty($extra['findType'])) {
 			$type = $extra['findType'];
