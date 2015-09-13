@@ -17,7 +17,7 @@ class FavoritesController extends AppController {
 				)
 		),
 		'Book' => array(
-			'limit' => 20,
+			'limit' => 25,
 			'order' => array('id' => 'desc')
 		)
 	);
@@ -106,6 +106,22 @@ class FavoritesController extends AppController {
 		)   
 		);
 		var_dump($aa);*/
+	}
+	public function table() {
+		$this->paginate = array(
+			'Favorite' => array(
+				'group' => 'book_id',
+				'limit' => 25,
+				'order' => array('id' => 'desc'),
+				'conditions' => array(
+					'NOT' => array(
+						'Favorite.review' => ''
+						)
+					)
+			)
+		);
+		$this->set('Book', $this->paginate('Favorite'));
+		$this->set('User', $this);
 	}
 
 
