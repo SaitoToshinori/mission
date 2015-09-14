@@ -1,6 +1,10 @@
 <h2><?php echo $this->request->query('title') ?>の検索結果</h2>
 
 
+<?php
+ echo $this->Paginator->counter(array('format' => '全%count%件' ));
+ echo $this->Paginator->counter(array('format' => '{:page}/{:pages}ページを表示'));
+?>
 <table>
      
     <tr>

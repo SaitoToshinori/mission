@@ -112,12 +112,8 @@ class FavoritesController extends AppController {
 			'Favorite' => array(
 				'group' => 'book_id',
 				'limit' => 25,
-				'order' => array('id' => 'desc'),
-				'conditions' => array(
-					'NOT' => array(
-						'Favorite.review' => ''
-						)
-					)
+				'order' => array('id' => 'desc')
+						
 			)
 		);
 		$this->set('Book', $this->paginate('Favorite'));
