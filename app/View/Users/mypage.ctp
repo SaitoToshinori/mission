@@ -70,7 +70,7 @@
     <tr>
         <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "/books/detail?isbn=".$book['Book']['isbn'])); ?></td>
         <td><?php echo $this->Html->link($book['Book']['title'], array('controller' => 'books', 'action' => 'detail',"detail?isbn=".$book['Book']['isbn'])); ?></td>
-        <td><?php echo $this->Html->link($book['Book']['author'], 'author?author='.$book['Book']['author']); ?></td>
+        <td><?php echo $this->Html->link($book['Book']['author'], '/books/author?author='.$book['Book']['author']); ?></td>
         <td><?php echo $book['Book']['publication']; ?></td>
         <td><?php $id = $book['Book']['id'];
                   $user_ids = $User->Favorite->find('all', array(

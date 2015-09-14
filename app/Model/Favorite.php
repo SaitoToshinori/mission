@@ -14,4 +14,13 @@ class Favorite extends AppModel {
 			)
 		);
 
+		public $validate = array(
+			'situation' => array(
+	            'required' => array(
+	                'rule' => array('notEmpty'),
+	                'message' => '選択してください'
+	            )
+	        )
+        );
+		//situationのバリデート
 }
