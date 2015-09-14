@@ -42,8 +42,13 @@
     <?php endforeach; ?>
      
 </table>
+<?php 
+    echo $this->Form->create('User', array('action' => 'review'));
+    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['id']));
+    echo $this->Form->end('もっと見る');
+?>
 
-<?php echo $this->Html->link('もっと見る', 'review'); ?>
+
 <h2><?php echo $name['User']['username']; ?>の登録した本</h2>
 
 <?php
@@ -79,4 +84,8 @@
     <?php endforeach; ?>
      
 </table>
-<?php echo $this->Html->link('もっと見る', 'book'); ?>
+<?php 
+    echo $this->Form->create('User', array('action' => 'book'));
+    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['id']));
+    echo $this->Form->end('もっと見る');
+?>

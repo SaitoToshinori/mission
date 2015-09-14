@@ -4,7 +4,7 @@ class BooksController extends AppController {
 
     public $helpers = array('Html', 'Form');
 
-	public $uses = array('Book', 'Favorite');
+	public $uses = array('Book', 'Favorite', 'BookAPI');
 
 	public $paginate = array(
 			'Book'	=> array(
@@ -118,7 +118,7 @@ class BooksController extends AppController {
 	        //$this->set('divination', $xmlArray)*/
 	    }
 	    $this->paginate = array(
-	    	'Book' => array(
+	    	'BookAPI' => array(
 	    		'conditions' => array(
 	    			'title' => $this->request->query('title')
 	    		),
@@ -137,7 +137,7 @@ class BooksController extends AppController {
 		);*/
 		
 		
-		$items = $this->paginate();
+		$items = $this->paginate('BookAPI');
 	    $this->set('items', $items);    
 		
 		
@@ -183,7 +183,7 @@ class BooksController extends AppController {
 	    }
 
 	    $this->paginate = array(
-	    	'Book' => array(
+	    	'BookAPI' => array(
 	    		'conditions' => array(
 	    			'author' => $this->request->query('author')
 	    		),
@@ -192,7 +192,7 @@ class BooksController extends AppController {
 
 	    	)
 	    );
-	    $items = $this->paginate();
+	    $items = $this->paginate('BookAPI');
 	    $this->set('items', $items);    
 		/*
 		もし著者がクリックされたら(リンクを張り、リンクにはその著者の名前が入っている変数を格納し田植えでauthorページに行く。これを検索条件にapiを使用)
@@ -291,7 +291,7 @@ class BooksController extends AppController {
 	}
 
 	public function table() {
-		$this->set('Book', $this->paginate());
+		$this->set('Book', $this->paginate('Book'));
 		$this->set('User', $this);
 	}
 	/*

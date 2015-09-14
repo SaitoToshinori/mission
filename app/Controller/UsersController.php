@@ -76,20 +76,22 @@ class UsersController extends AppController {
 	}
 
 	public function book() {
+		//favoritesテーブルのuser-idが送られてきたuser-idと一致する者を取ってくる
 		$this->paginate = array(
 			'Favorite' => array(
 				'limit' => 25,
 				'order' => array('id' => 'desc'),
 				'conditions' => array(
-					'NOT' => array(
-						'Favorite.review' => ''
+					'Favorite.user_id' => $this->request->data['User']['userid']
 					)
-				)
 			)
 		);
-		$this->set('Book',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->Auth->user('id')
-			)));
+		$name = $this->User->find('first', array(
+				'conditions' => array(
+					'User.id' => $this->request->data['User']['userid'])
+			));
+		$this->set('name', $name);
+		$this->set('Book',$this->paginate('Favorite'));
 		
 	}
 
@@ -99,15 +101,20 @@ class UsersController extends AppController {
 				'limit' => 25,
 				'order' => array('id' => 'desc'),
 				'conditions' => array(
+					'Favorite.user_id' => $this->request->data['User']['userid'],
 					'NOT' => array(
 						'Favorite.review' => ''
 					)
 				)
 			)
 		);
-		$this->set('Favorite',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->Auth->user('id')
-			)));
+		$this->set('Favorite',$this->paginate('Favorite'));
+		$this->set('user_id', $this->request->data['User']['userid']);
+		$name = $this->User->find('first', array(
+				'conditions' => array(
+					'User.id' => $this->request->data['User']['userid'])
+			));
+		$this->set('name', $name);
 	}
 
 }

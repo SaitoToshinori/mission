@@ -30,7 +30,7 @@
      
 </table>
 
-<?php echo $this->Html->link('もっと見る', '/favorites/table'); ?>
+<?php echo $this->Html->link('もっと見る', 'table'); ?>
 
 
 <h2>レビュー</h2>

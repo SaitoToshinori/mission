@@ -11,7 +11,7 @@ class Book extends AppModel {
             )
         )
     );
-
+	/*
     public $resultCount = 0;
 
     public function paginate() {          	
@@ -47,5 +47,5 @@ class Book extends AppModel {
 	public function paginateCount() {
 		return $this->resultCount;
 	}
-
+	*/
 }

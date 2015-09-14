@@ -1,4 +1,4 @@
-<h2><?php echo $auth->user()['username']; ?>の登録した本</h2>
+<h2><?php echo $name['User']['username']; ?>の登録した本</h2>
 
 <?php
  echo $this->Paginator->counter(array('format' => '全%count%件' ));
@@ -16,9 +16,9 @@
      
     <?php foreach ($Book as $book): ?>
     <tr>
-        <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "detail?title=".$book['Book']['title'])); ?></td>
-        <td><?php echo $this->Html->link($book['Book']['title'], 'detail?title='.$book['Book']['title']); ?></td>
-        <td><?php echo $this->Html->link($book['Book']['author'], 'author?author='.$book['Book']['author']); ?></td>
+        <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "/books/detail?isbn=".$book['Book']['isbn'])); ?></td>
+        <td><?php echo $this->Html->link($book['Book']['title'], '/books/detail?isbn='.$book['Book']['isbn']); ?></td>
+        <td><?php echo $this->Html->link($book['Book']['author'], '/books/author?author='.$book['Book']['author']); ?></td>
         <td><?php echo $book['Book']['publication']; ?></td>
     </tr>
     <?php endforeach; ?>

@@ -1,4 +1,4 @@
-<h2><?php echo $auth->user()['username']; ?>のしたレビュー</h2>
+<h2><?php echo $name['User']['username']; ?>のしたレビュー</h2>
 
 <?php
  echo $this->Paginator->counter(array('format' => '全%count%件' ));
