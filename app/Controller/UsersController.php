@@ -77,6 +77,7 @@ class UsersController extends AppController {
 
 	public function book() {
 		//favoritesテーブルのuser-idが送られてきたuser-idと一致する者を取ってくる
+		$id = $this->request->data['User']['userid'];
 		$this->paginate = array(
 			'Favorite' => array(
 				'limit' => 25,
@@ -86,12 +87,13 @@ class UsersController extends AppController {
 					)
 			)
 		);
+		
 		$name = $this->User->find('first', array(
 				'conditions' => array(
-					'User.id' => $this->request->data['User']['userid'])
+					'User.id' => $id)
 			));
 		$this->set('name', $name);
-		$this->set('Book',$this->paginate('Favorite'));
+		$this->set('Book', $this->paginate('Favorite'));
 		
 	}
 
@@ -108,6 +110,7 @@ class UsersController extends AppController {
 				)
 			)
 		);
+
 		$this->set('Favorite',$this->paginate('Favorite'));
 		$this->set('user_id', $this->request->data['User']['userid']);
 		$name = $this->User->find('first', array(

@@ -1,9 +1,5 @@
 <h2><?php echo $name['User']['username']; ?>のしたレビュー</h2>
 
-<?php
- echo $this->Paginator->counter(array('format' => '全%count%件' ));
- echo $this->Paginator->counter(array('format' => '{:page}/{:pages}ページを表示'));
-?>
 
 <table>
      
@@ -50,11 +46,6 @@
 
 
 <h2><?php echo $name['User']['username']; ?>の登録した本</h2>
-
-<?php
- echo $this->Paginator->counter(array('format' => '全%count%件' ));
- echo $this->Paginator->counter(array('format' => '{:page}/{:pages}ページを表示'));
-?>
 
 <table>
      

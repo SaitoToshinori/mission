@@ -33,4 +33,4 @@ echo $this->Paginator->prev('< 前へ', array(), null, array('class' => 'prev di
 echo $this->Paginator->numbers(array('separator' => ''));
 echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next disabled'));
 ?>
-<?php echo $this->Html->link('もっと見る', 'book'); ?>
+<?php echo $this->Html->link('もっと見る', '/books/table'); ?>
