@@ -12,14 +12,17 @@
         <th>タイトル</th>
         <th>著者</th>
         <th>発売日</th>
+        <th>レビュワー名</th>
     </tr>
      
     <?php foreach ($Book as $book): ?>
+        
     <tr>
         <td><?php echo $this->Html->image($book['Book']['thumbnail'], array('alt' => 'サムネイル', 'url' => "/books/detail?isbn=".$book['Book']['isbn'])); ?></td>
         <td><?php echo $this->Html->link($book['Book']['title'], '/books/detail?isbn='.$book['Book']['isbn']); ?></td>
         <td><?php echo $this->Html->link($book['Book']['author'], '/books/author?author='.$book['Book']['author']); ?></td>
         <td><?php echo $book['Book']['publication']; ?></td>
+        <td><?php echo $this->Html->link($book['User']['username'], "mypage/".$book['User']['id']); ?></td>
     </tr>
     <?php endforeach; ?>
      
