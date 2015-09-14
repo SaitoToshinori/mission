@@ -43,11 +43,6 @@
      
 </table>
 
-<?php
-echo $this->Paginator->prev('< 前へ', array(), null, array('class' => 'prev disabled'));
-echo $this->Paginator->numbers(array('separator' => ''));
-echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next disabled'));
-?>
 <?php echo $this->Html->link('もっと見る', 'review'); ?>
 <h2><?php echo $name['User']['username']; ?>の登録した本</h2>
 
@@ -84,10 +79,4 @@ echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next di
     <?php endforeach; ?>
      
 </table>
-
-<?php
-echo $this->Paginator->prev('< 前へ', array(), null, array('class' => 'prev disabled'));
-echo $this->Paginator->numbers(array('separator' => ''));
-echo $this->Paginator->next('次へ >', array(), null, array('class' => 'next disabled'));
-?>
 <?php echo $this->Html->link('もっと見る', 'book'); ?>
