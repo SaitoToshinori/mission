@@ -61,40 +61,42 @@ class UsersController extends AppController {
 
 	public function mypage() {
 		$this->set('Favorite',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->request->params['id']
+			'Favorite.user_id' => $this->request->params['pass'][0]
 			)));
 		$this->set('Book',$this->paginate('Favorite', array(
-			'Favorite.user_id' => $this->request->params['id']
+			'Favorite.user_id' => $this->request->params['pass'][0]
 			)));
-		$id = $this->request->params['id'];
+		$id = $this->request->params['pass'][0];
 		$name = $this->User->find('first', array(
 			'conditions' => array(
 				'User.id' => $id
 				)));
 		$this->set('name', $name);
 		$this->set('User', $this);
+
 	}
 
 	public function book() {
 		//favoritesテーブルのuser-idが送られてきたuser-idと一致する者を取ってくる
-		$id = $this->request->data['User']['userid'];
+		//var_dump($this->request->data);
+		//$id = $this->request->data['User']['userid'];
+		
 		$this->paginate = array(
 			'Favorite' => array(
 				'limit' => 25,
 				'order' => array('id' => 'desc'),
 				'conditions' => array(
-					'Favorite.user_id' => $this->request->data['User']['userid']
+					'Favorite.user_id' => $this->request->query('userid')
 					)
 			)
 		);
 		
 		$name = $this->User->find('first', array(
 				'conditions' => array(
-					'User.id' => $id)
+					'User.id' => $this->request->query('userid'))
 			));
 		$this->set('name', $name);
 		$this->set('Book', $this->paginate('Favorite'));
-		
 	}
 
 	public function review() {
@@ -103,19 +105,19 @@ class UsersController extends AppController {
 				'limit' => 25,
 				'order' => array('id' => 'desc'),
 				'conditions' => array(
-					'Favorite.user_id' => $this->request->data['User']['userid'],
+					'Favorite.user_id' => $this->request->query('userid'),
 					'NOT' => array(
 						'Favorite.review' => ''
 					)
 				)
 			)
 		);
-
+		//var_dump($this->request->query('userid'));
 		$this->set('Favorite',$this->paginate('Favorite'));
-		$this->set('user_id', $this->request->data['User']['userid']);
+		$this->set('user_id', $this->request->query('userid'));
 		$name = $this->User->find('first', array(
 				'conditions' => array(
-					'User.id' => $this->request->data['User']['userid'])
+					'User.id' => $this->request->query('userid'))
 			));
 		$this->set('name', $name);
 	}

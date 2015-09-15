@@ -23,24 +23,25 @@
         <td><?php echo $favorite['Favorite']['evaluation']; ?></td>
         <td><?php echo $favorite['Favorite']['review']; ?></td>
         <td>
-        <?php  if($this->request->params['id'] == $auth->user('id')) {
+        <?php  if($this->request->params['pass'][0] == $auth->user('id')) {
             echo  $this->Form->postLink('削除', array('controller' => 'favorites', 'action' => 'delete', $favorite['Favorite']['id']));
             } else {
             echo '他人のお気に入りは削除できません';} ?>
         </td>
         <td>
-        <?php  if($this->request->params['id'] == $auth->user('id')) {
+        <?php  if($this->request->params['pass'][0] == $auth->user('id')) {
             echo  $this->Html->link('編集', array('controller' => 'favorites', 'action' => 'edit', $favorite['Favorite']['id']));
             } else {
-            echo '他人のお気に入りは編集できません';} ?>
+            echo '他人のお気に入りは編集できません';
+            } ?>
         </td>
     </tr>
     <?php endforeach; ?>
      
 </table>
 <?php 
-    echo $this->Form->create('User', array('action' => 'review'));
-    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['id']));
+    echo $this->Form->create('User', array('action' => 'review', 'type' => 'get'));
+    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['pass'][0]));
     echo $this->Form->end('もっと見る');
 ?>
 
@@ -76,7 +77,7 @@
      
 </table>
 <?php 
-    echo $this->Form->create('User', array('action' => 'book'));
-    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['id']));
+    echo $this->Form->create('User', array('action' => 'book', 'type' => 'get'));
+    echo $this->Form->input('userid', array('type'=>'hidden','value'=>$this->request->params['pass'][0]));
     echo $this->Form->end('もっと見る');
 ?>

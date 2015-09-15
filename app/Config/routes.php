@@ -29,12 +29,12 @@
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
-
+/*
 	Router::connect("/users/mypage/:id",
 		array('controller' => 'users', 'action' => 'mypage'),
     	array("id"=>"[0-9]+")
     );
-
+*/
     Router::connect("/favorites/edit/:id",
 		array('controller' => 'favorites', 'action' => 'edit'),
     	array("id"=>"[0-9]+")
